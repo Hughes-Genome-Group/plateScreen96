@@ -489,8 +489,10 @@ printingInBatches=0
 if [ $(($( cat blatted_parsed.txt | grep -c "" ))) -lt ${maxLinesPerFile} ]; then
 
   # Normal printing
-  cat indiceKey.txt | sed 's/^/D/' | cat -  spacerPrimerRefLocus_forFigure.txt blatted_parsed.txt > forFigure.txt
-  cat indiceKey.txt | sed 's/^/D/' | cat -  spacerPrimerRefLocus_forFigure.txt blatted_withOrigSeq_parsed.txt > forFigure_withOrigSeq.txt
+  echo "DSample Name : ${nameList[$i]}"  > forFigure.txt
+  cat indiceKey.txt | sed 's/^/D/' | cat -  spacerPrimerRefLocus_forFigure.txt blatted_parsed.txt >> forFigure.txt
+  echo "DSample Name : ${nameList[$i]}"  > forFigure_withOrigSeq.txt
+  cat indiceKey.txt | sed 's/^/D/' | cat -  spacerPrimerRefLocus_forFigure.txt blatted_withOrigSeq_parsed.txt >> forFigure_withOrigSeq.txt
    
 else
 
@@ -525,7 +527,8 @@ else
     tail -n +$((${lastLine}+1)) blatted_parsed_remainder.txt > TEMP.txt
     mv -f TEMP.txt blatted_parsed_remainder.txt
     
-    cat indiceKey.txt | sed 's/^/D/' | cat -  spacerPrimerRefLocus_forFigure.txt blatted_parsed_${round}.txt > forFigure_${round}.txt
+    echo "DSample Name : ${nameList[$i]}_${round}" > forFigure_${round}.txt
+    cat indiceKey.txt | sed 's/^/D/' | cat -  spacerPrimerRefLocus_forFigure.txt blatted_parsed_${round}.txt >> forFigure_${round}.txt
   
   done
   
@@ -549,7 +552,8 @@ else
     tail -n +$((${lastLine}+1)) blatted_parsed_remainder.txt > TEMP.txt
     mv -f TEMP.txt blatted_parsed_remainder.txt
     
-    cat indiceKey.txt | sed 's/^/D/' | cat -  spacerPrimerRefLocus_forFigure.txt blatted_parsed_withOrigSeq_${round}.txt > forFigure_withOrigSeq_${round}.txt
+   echo "DSample Name : ${nameList[$i]}_${round}" > forFigure_withOrigSeq_${round}.txt
+   cat indiceKey.txt | sed 's/^/D/' | cat -  spacerPrimerRefLocus_forFigure.txt blatted_parsed_withOrigSeq_${round}.txt >> forFigure_withOrigSeq_${round}.txt
   
   done
   rm -f blatted_parsed_remainder.txt
