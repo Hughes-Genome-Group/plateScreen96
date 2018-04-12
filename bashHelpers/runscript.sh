@@ -413,13 +413,13 @@ fi
 figureGenerated=1
 if [ "${printingInBatches}" -eq 0 ]; then
 
-  printThis="${PythonHelpersPath}/${figurescript} forFigure.txt blattedFigure ${figureparams}"
+  printThis="${PythonHelpersPath}/${figurescript} forFigure.txt ${nameList[$i]}_blattedFigure ${figureparams}"
   printToLogFile
-  python ${PythonHelpersPath}/${figurescript} forFigure.txt blattedFigure ${figureparams}
+  python ${PythonHelpersPath}/${figurescript} forFigure.txt ${nameList[$i]}_blattedFigure ${figureparams}
   
-  printThis="${PythonHelpersPath}/${figurescript} forFigure_withOrigSeq.txt blattedFigure_withOrigSeq ${figureparams}"
+  printThis="${PythonHelpersPath}/${figurescript} forFigure_withOrigSeq.txt ${nameList[$i]}_blattedFigure_withOrigSeq ${figureparams}"
   printToLogFile
-  python ${PythonHelpersPath}/${figurescript} forFigure_withOrigSeq.txt blattedFigure_withOrigSeq ${figureparams}
+  python ${PythonHelpersPath}/${figurescript} forFigure_withOrigSeq.txt ${nameList[$i]}_blattedFigure_withOrigSeq ${figureparams}
 
 else
 
@@ -431,9 +431,9 @@ else
     for file in forFigure_*.txt
     do
     orderNo=$( echo ${file} | sed 's/^forFigure//' | sed 's/.txt$//' )
-    printThis="${PythonHelpersPath}/${figurescript} ${file} blattedFigure${orderNo} ${figureparams}"
+    printThis="${PythonHelpersPath}/${figurescript} ${file} ${nameList[$i]}_blattedFigure${orderNo} ${figureparams}"
     printToLogFile
-    python ${PythonHelpersPath}/${figurescript} ${file} blattedFigure${orderNo} ${figureparams}
+    python ${PythonHelpersPath}/${figurescript} ${file} ${nameList[$i]}_blattedFigure${orderNo} ${figureparams}
     done
   fi
     
@@ -454,18 +454,18 @@ quickFix
 
 if [ "${printingInBatches}" -eq 0 ]; then
 
-  printThis="${PythonHelpersPath}/figurer.py forFigure_alsoReferenceAligned.txt blattedFigure_alsoReferenceAligned ${basesForFigure}"
+  printThis="${PythonHelpersPath}/figurer.py forFigure_alsoReferenceAligned.txt ${nameList[$i]}_blattedFigure_alsoReferenceAligned ${basesForFigure}"
   printToLogFile
-  python ${PythonHelpersPath}/figurer.py forFigure_alsoReferenceAligned.txt blattedFigure_alsoReferenceAligned ${basesForFigure}
+  python ${PythonHelpersPath}/figurer.py forFigure_alsoReferenceAligned.txt ${nameList[$i]}_blattedFigure_alsoReferenceAligned ${basesForFigure}
 
 else
 
   for file in forFigure_alsoReferenceAligned_*.txt
   do
   orderNo=$( echo ${file} | sed 's/^forFigure//' | sed 's/.txt$//' )
-  printThis="${PythonHelpersPath}/figurer.py ${file} blattedFigure${orderNo} ${basesForFigure}"
+  printThis="${PythonHelpersPath}/figurer.py ${file} ${nameList[$i]}_blattedFigure${orderNo} ${basesForFigure}"
   printToLogFile
-  python ${PythonHelpersPath}/figurer.py ${file} blattedFigure${orderNo} ${basesForFigure}
+  python ${PythonHelpersPath}/figurer.py ${file} ${nameList[$i]}_blattedFigure${orderNo} ${basesForFigure}
   done
     
 fi
