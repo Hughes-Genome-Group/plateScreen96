@@ -38,7 +38,7 @@ trap finish EXIT
 exitCode=0
 
 echo
-echo "This is test for NGseqBasic configuration setup ! "
+echo "This is test for plateScreen96 configuration setup ! "
 echo
 echo "( For automated testing : Return value of the script is '0' if all clear or only warnings, and '1' if fatal errors encountered. )"
 echo
@@ -50,9 +50,8 @@ echo
 echo "1) Testing that the UNIX basic tools (sed, awk, etc) are found"
 echo "2) Testing that the needed scripts are found 'near by' the main script "
 echo "3) Setting the environment - running the conf/config.sh , to set the user-defined parameters"
-echo "4) Listing the set allowed genomes, and blacklist files"
-echo "5) Testing that all toolkits (bowtie etc) are found in the user-defined locations"
-echo "6) Testing that the user-defined public server exists"
+echo "4) Listing the set genome fastas"
+echo "5) Testing that all toolkits (blat etc) are found in the user-defined locations"
 echo
 sleep 5
 
@@ -198,19 +197,22 @@ exitCode=$(( ${exitCode} + $? ))
 
 # From where to call the CONFIGURATION script..
 
-confFolder="${PipeTopPath}/conf"
-mainScriptFolder="${PipeTopPath}/bin/mainScripts"
-helperScriptFolder="${PipeTopPath}/bin/bashHelpers"
-perlScriptFolder="${PipeTopPath}/bin/perlHelpers"
+confFolder="${PipeTopPath}/config"
+
+BashHelpersPath="${PipeTopPath}/bin/bashHelpers"
+PerlHelpersPath="${PipeTopPath}/bin/perlHelpers"
+PythonHelpersPath="${PipeTopPath}/bin/pythonHelpers"
+RHelpersPath="${PipeTopPath}/bin/rHelpers"
 
 echo
 echo "This is where they should be ( will soon see if they actually are there ) :"
 echo
 echo "PipeTopPath        ${PipeTopPath}"
 echo "confFolder         ${confFolder}"
-echo "mainScriptFolder   ${mainScriptFolder}"
-echo "helperScriptFolder ${helperScriptFolder}"
-echo "perlScriptFolder   ${perlScriptFolder}"
+echo "BashHelpersPath    ${BashHelpersPath}"
+echo "PerlHelpersPath    ${PerlHelpersPath}"
+echo "PythonHelpersPath  ${PythonHelpersPath}"
+echo "RHelpersPath       ${RHelpersPath}"
 echo
 
 sleep 4
@@ -223,59 +225,59 @@ scriptFilesMissing=0
 echo
 echo "Master script and its tester script :"
 echo
-ls ${PipeTopPath}/NGseqBasic.sh
+ls ${PipeTopPath}/plateScreen96.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 ls ${PipeTopPath}/testEnvironment.sh 
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 echo
 sleep 3
-echo "Other bash scripts :"
-echo
-ls ${mainScriptFolder}/QC_and_Trimming.sh
-scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${mainScriptFolder}/afterBowtieMapping.sh
-scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${mainScriptFolder}/dataHubGenerator.sh
-scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-echo
-sleep 3
 echo "Bash subroutines :"
 echo
-ls ${helperScriptFolder}/inputFastqs.sh
+ls ${BashHelpersPath}/cleaningUp.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/mappingSubroutines.sh
+ls ${BashHelpersPath}/curateParsed.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/trimmingSubroutines.sh
+ls ${BashHelpersPath}/fastqChecksFromPyramid.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/bowtieStatistics.sh
+ls ${BashHelpersPath}/fileTesters.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/cleanUpAndList.sh
+ls ${BashHelpersPath}/fromPslToFigure.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/fileTesters.sh
+ls ${BashHelpersPath}/indexmanipulation.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/logFilePrinter.sh
+ls ${BashHelpersPath}/inputFastqs.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/parameterSetters.sh
+ls ${BashHelpersPath}/logFilePrinter.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/usageAndVersion.sh
+ls ${BashHelpersPath}/parameterFileReaders.sh
+scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
+ls ${BashHelpersPath}/QC_and_Trimming.sh
+scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
+ls ${BashHelpersPath}/runscript.sh
+scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
+ls ${BashHelpersPath}/runscriptHelpers.sh
+scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
+ls ${BashHelpersPath}/usageAndVersion.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 echo
 sleep 3
 echo "Perl scripts :"
 echo
-ls ${perlScriptFolder}/data2gff.pl
+ls ${PerlHelpersPath}/fastq_int_scores.pl
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${perlScriptFolder}/fastq_scores_bowtie1.pl
+echo
+echo "Python scripts :"
+echo
+ls ${PythonHelpersPath}/figurer.py
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${perlScriptFolder}/fastq_scores_bowtie2.pl
+ls ${PythonHelpersPath}/figurerWithHighlight.py
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${perlScriptFolder}/reverse_seq.pl
+ls ${PythonHelpersPath}/figurerWithUnlimitedHighlight.py
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${perlScriptFolder}/sam2fastq.pl
-scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${perlScriptFolder}/trim1base3prime.pl
-scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${perlScriptFolder}/windowingScript.pl
+echo
+echo "R scripts :"
+echo
+ls ${RHelpersPath}/makeOneFigure.R
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 echo
 sleep 3
@@ -285,8 +287,6 @@ ls ${confFolder}/genomeBuildSetup.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 ls ${confFolder}/loadNeededTools.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${confFolder}/serverAddressAndPublicDiskSetup.sh
-scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 echo
 sleep 3
 echo "Configuration tester helpers :"
@@ -294,8 +294,6 @@ echo
 ls ${helperScriptFolder}/validateSetup/g.txt
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 ls ${helperScriptFolder}/validateSetup/l.txt
-scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/validateSetup/s.txt
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 echo
 sleep 3
@@ -305,38 +303,35 @@ then
 echo
 echo "###########################################"
 echo
-echo "ERROR !   The scripts NGseqBasic.sh is dependent on, are not found in their correct relative paths !"
+echo "ERROR !   The scripts plateScreen96.sh is dependent on, are not found in their correct relative paths !"
 echo "          Maybe your tar archive was corrupted, or you meddled with the folder structure after unpacking ?"
 echo
 echo "###########################################"
 echo
-echo "This is what you SHOULD see if you run 'tree' command in your NGseqBasic folder :"
+echo "This is what you SHOULD see if you run 'tree' command in your plateScreen96 folder :"
 echo
-echo ' |-- NGseqBasic.sh'
+
+echo ' |-- plateScreen96.sh'
 echo ' |-- testEnvironment.sh'
 echo ' |'
 echo ' `-- bin'
-echo '     |-- mainScripts'
-echo '     |   |-- QC_and_Trimming.sh afterBowtieMapping.sh dataHubGenerator.sh'
 echo '     |-- bashHelpers'
-echo '     |   |-- inputFastqs.sh mappingSubroutines.sh trimmingSubroutines.sh '
-echo '     |   |-- bowtieStatistics.sh cleanUpAndList.sh fileTesters.sh '
-echo '     |   |-- logFilePrinter.sh parameterSetters.sh usageAndVersion.sh'
-echo '     |   `-- validateSetup'
-echo '     |       `-- g.txt l.txt s.txt'
-echo '     `-- perlHelpers'
-echo '         |-- data2gff.pl fastq_scores_bowtie1/2.pl reverse_seq.pl '
-echo '         `-- sam2fastq.pl trim1base3prime.pl windowingScript.pl'
+echo '     |   |-- cleaningUp.sh curateParsed.sh fastqChecksFromPyramid.sh'
+echo '     |   |-- fileTesters.sh fromPslToFigure.sh indexmanipulation.sh'
+echo '     |   |-- inputFastqs.sh logFilePrinter.sh'
+echo '     |   |-- parameterFileReaders.sh QC_and_Trimming.sh'
+echo '     |   `-- runscript.sh runscriptHelpers.sh usageAndVersion.sh'
+echo '     |'
+echo '     |-- perlHelpers'
+echo '     |   `-- fastq_int_scores.pl'
+echo '     |-- pythonHelpers'
+echo '     |   `-- figurer.py figurerWithHighlight.py figurerWithUnlimitedHighlight.py'
+echo '     `-- rHelpers'
+echo '         `-- makeOneFigure.R'
 echo ''
-echo '`-- conf'
-echo '    |-- BLACKLIST'
-echo '    |   `-- hg18.bed hg19.bed mm10.bed mm9.bed'
-echo '    |-- genomeBuildSetup.sh'
-echo '    |-- loadNeededTools.sh'
-echo '    |-- serverAddressAndPublicDiskSetup.sh'
-echo '    `-- UCSCgenomeSizes'
-echo '        |-- danRer10/7.chrom.sizes dm3.chrom.sizes galGal4.chrom.sizes'
-echo '        `-- hg18/19/38.chrom.sizes mm10/9.chrom.sizes'
+echo ' `-- config'
+echo '     |-- genomeBuildSetup.sh'
+echo '     `-- loadNeededTools.sh'
 echo ''
 
 sleep 4
@@ -433,20 +428,13 @@ fi
 ##########################################################################
 
 supportedGenomes=()
-BOWTIE1=()
-BOWTIE2=()
-UCSC=()
-genomesWhichHaveBlacklist=()
-BLACKLIST=()
+GenomeFastaList=()
 
 # These have been checked earlier. Should exist now.
 . ${confFolder}/loadNeededTools.sh
 . ${confFolder}/genomeBuildSetup.sh
-. ${confFolder}/serverAddressAndPublicDiskSetup.sh
-
 
 setGenomeLocations 1>/dev/null
-setPublicLocations 1>/dev/null
 setPathsForPipe 1>/dev/null
 
 echo
@@ -454,7 +442,7 @@ sleep 4
 
 echo "###########################################"
 echo
-echo "4) Listing the setup of allowed genomes, and blacklist files"
+echo "4) Listing the set genome fastas"
 echo
 
 
@@ -469,80 +457,17 @@ sleep 2
 
 ##########################################################################
 echo
-echo "Bowtie 1 indices : "
+echo "Fasta files : "
 echo
-echo -e "GENOME\tBOWTIE 1 index"
+echo -e "GENOME\tFASTA file"
 for g in $( seq 0 $((${#supportedGenomes[@]}-1)) ); do    
 
- echo -en "${supportedGenomes[$g]}\t${BOWTIE1[$g]}"
+ echo -en "${supportedGenomes[$g]}\t${GenomeFastaList[$g]}"
 
-TEMPcount=$(($( ls -1 ${BOWTIE1[$g]}* | grep -c "" )))
-
-if [ "${TEMPcount}" -eq 0 ]; then
-    echo -e "\tINDICES DO NOT EXIST in the given location !!"
-    exitCode=$(( ${exitCode} +1 ))
- else
-    echo ""
- fi
- 
-done
-
-echo
-sleep 2
-
-##########################################################################
-echo
-echo "Bowtie 2 indices : "
-echo
-echo -e "GENOME\tBOWTIE 2 index"
-for g in $( seq 0 $((${#supportedGenomes[@]}-1)) ); do    
-
- echo -en "${supportedGenomes[$g]}\t${BOWTIE2[$g]}"
-
-TEMPcount=$(($( ls -1 ${BOWTIE2[$g]}* | grep -c "" )))
+TEMPcount=$(($( ls -1 ${GenomeFastaList[$g]}* | grep -c "" )))
 
 if [ "${TEMPcount}" -eq 0 ]; then
-    echo -e "\tINDICES DO NOT EXIST in the given location !!"
-    exitCode=$(( ${exitCode} +1 ))
- else
-    echo ""
- fi
- 
-done
-
-echo
-sleep 2
-
-##########################################################################
-echo
-echo "UCSC genome size files : "
-echo
-for g in $( seq 0 $((${#supportedGenomes[@]}-1)) ); do
-    
- echo -en "${supportedGenomes[$g]}\t${UCSC[$g]}"
-    
- if [ ! -e "${UCSC[$g]}" ] || [ ! -r "${UCSC[$g]}" ] || [ ! -s "${UCSC[$g]}" ]; then
-    echo -e "\tFILE DOES NOT EXIST in the given location !!"
-    exitCode=$(( ${exitCode} +1 ))
- else
-    echo ""
- fi
-
-done
-
-echo
-sleep 5
-
-##########################################################################
-echo
-echo "Genomes which have blacklist : "
-echo
-for g in $( seq 0 $((${#genomesWhichHaveBlacklist[@]}-1)) ); do
-    
- echo -en "${supportedGenomes[$g]}\t${BLACKLIST[$g]}"
-
- if [ ! -e "${BLACKLIST[$g]}" ] || [ ! -r "${BLACKLIST[$g]}" ] || [ ! -s "${BLACKLIST[$g]}" ]; then
-    echo -e "\tFILE DOES NOT EXIST in the given location !!"
+    echo -e "\tGENOME FASTA FILE DOES NOT EXIST in the given location !!"
     exitCode=$(( ${exitCode} +1 ))
  else
     echo ""
@@ -557,31 +482,13 @@ sleep 2
 
 echo "###########################################"
 echo
-echo "5) Testing that all toolkits (bowtie etc) are found in the user-defined locations"
+echo "5) Testing that all toolkits (blat etc) are found in the user-defined locations"
 echo
 
-echo "Ucsctools .."
+echo "Blat .."
 echo
-bedGraphToBigWig 2>&1 | head -n 1
-which bedGraphToBigWig >> /dev/null
-exitCode=$(( ${exitCode} + $? ))
-bedClip          2>&1 | head -n 1
-which bedClip          >> /dev/null
-exitCode=$(( ${exitCode} + $? ))
-bedGraphPack     2>&1 | head -n 1
-which bedGraphPack     >> /dev/null
-exitCode=$(( ${exitCode} + $? ))
-bedToBigBed      2>&1 | head -n 1
-which bedToBigBed      >> /dev/null
-exitCode=$(( ${exitCode} + $? ))
-echo
-
-sleep 3
-
-echo "Samtools .."
-echo
-samtools 2>&1 | head -n 3 | grep -v "^\s*$"
-which samtools >> /dev/null
+blat 2>&1 | head -n 1
+which blat >> /dev/null
 exitCode=$(( ${exitCode} + $? ))
 echo
 
@@ -597,46 +504,10 @@ echo
 
 sleep 2
 
-echo "Bowtie 1 .."
-echo
-bowtie --version | head -n 5
-bowtie --version >> /dev/null
-exitCode=$(( ${exitCode} + $? ))
-echo
-
-sleep 2
-
-echo "Bowtie 2 .."
-echo
-bowtie2 --version | head -n 5
-bowtie2 --version >> /dev/null
-exitCode=$(( ${exitCode} + $? ))
-echo
-
-sleep 2
-
 echo "Flash .."
 echo
-flash --version | head -n 1
+flash --version
 flash --version >> /dev/null
-exitCode=$(( ${exitCode} + $? ))
-echo
-
-sleep 2
-
-echo "Trim_galore .."
-echo
-trim_galore --version | sed 's/^\s*//' | grep -v "^\s*$"
-trim_galore --version >> /dev/null
-exitCode=$(( ${exitCode} + $? ))
-echo
-
-sleep 2
-
-echo "Cutadapt .."
-echo
-cutadapt --version
-cutadapt --version >> /dev/null
 exitCode=$(( ${exitCode} + $? ))
 echo
 
@@ -652,6 +523,15 @@ echo
 
 sleep 4
 
+echo "MultiQC .. "
+echo
+multiqc --version
+multiqc --version >> /dev/null
+exitCode=$(( ${exitCode} + $? ))
+echo
+
+sleep 4
+
 echo "Perl .."
 echo
 perl --version | head -n 5 | grep -v "^\s*$"
@@ -660,39 +540,26 @@ exitCode=$(( ${exitCode} + $? ))
 echo
 
 sleep 2
-##########################################################################
 
-echo "###########################################"
+echo "R .."
 echo
-echo "6) Testing that the user-defined public server exists"
-echo
-
-echo
-echo "Public area settings : "
-echo
-echo "SERVERTYPE ${SERVERTYPE}"
-echo "SERVERADDRESS ${SERVERADDRESS}"
-echo "ADDtoPUBLICFILEPATH ${ADDtoPUBLICFILEPATH}"
-echo "REMOVEfromPUBLICFILEPATH ${REMOVEfromPUBLICFILEPATH}"
-echo "tobeREPLACEDinPUBLICFILEPATH ${tobeREPLACEDinPUBLICFILEPATH}"
-echo "REPLACEwithThisInPUBLICFILEPATH ${REPLACEwithThisInPUBLICFILEPATH}"
-echo
-
-sleep 3
-
-echo
-echo "--------------------------------------------------------------------------"
-echo "Testing the existence of public server ${SERVERTYPE}://${SERVERADDRESS} "
-echo
-echo "Any curl errors such as 'cannot resolve host' in the listing below, mean that the server is not available (possible typos in server name above ? ) "
-echo
-echo "curl --head ${SERVERTYPE}://${SERVERADDRESS} "
-echo
-
-curl --head ${SERVERTYPE}://${SERVERADDRESS}
+R --version | head -n 3
+R --version >> /dev/null
 exitCode=$(( ${exitCode} + $? ))
+echo
 
-sleep 5
+sleep 2
+
+echo "Python .."
+echo "(Python 3.* is NOT supported. Check below, that you have Python 2.*)"
+echo
+python --version
+python --version >> /dev/null
+exitCode=$(( ${exitCode} + $? ))
+echo
+
+sleep 4
+
 
 
 # Return the value : 0 if only warnings, 1 if fatal problems.
