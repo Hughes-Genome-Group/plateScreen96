@@ -1,3 +1,22 @@
+##########################################################################
+# Copyright 2018, Jelena Telenius (jelena.telenius@ndcls.ox.ac.uk)       #
+#                                                                        #
+# This file is part of plateScreen96 .                                   #
+#                                                                        #
+# plateScreen96 is free software: you can redistribute it and/or modify  #
+# it under the terms of the GNU General Public License as published by   #
+# the Free Software Foundation, either version 3 of the License, or      #
+# (at your option) any later version.                                    #
+#                                                                        #
+# plateScreen96 is distributed in the hope that it will be useful,       #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of         #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
+# GNU General Public License for more details.                           #
+#                                                                        #
+# You should have received a copy of the GNU General Public License      #
+# along with plateScreen96.  If not, see <http://www.gnu.org/licenses/>. #
+##########################################################################
+
 import sys
 import re
 import matplotlib
@@ -81,6 +100,7 @@ def printnewIndexLine(y) :
   # class matplotlib.patches.Rectangle(xy, width, height, angle=0.0, **kwargs)
   # Draw a rectangle with lower left at xy = (x, y) with specified width, height and rotation angle.
   axes.add_patch(patches.Rectangle((0, y-0.05), basesNeedSpaceX, 0.03, alpha=1, facecolor="plum", edgecolor="plum"))
+  
 
 def printRegularLine(text,y) :
   # Print the line
@@ -123,19 +143,31 @@ arrayN=[0,0,0]
 inputFile=sys.argv[1]
 outputBasename=sys.argv[2]
 hundredsOfBases=int(sys.argv[3])
-highlightStart=int(sys.argv[4])
-highlightEnd=int(sys.argv[5])
 
+print "Assigning highlight starts :"
+highlightStarts = []
+for i in sys.argv[4].split(','):
+    print i
+    if i.isdigit():
+      highlightStarts.append(int(i))
+
+print "Assigning highlight ends :"
+highlightEnds = []
+for i in sys.argv[5].split(','):
+    print i
+    if i.isdigit():
+      highlightEnds.append(int(i))
+    
 print "inputFile"
 print inputFile
 print "outputBasename"
 print outputBasename
 print "hundredsOfBases"
 print hundredsOfBases
-print "highlightStart"
-print highlightStart
-print "highlightEnd"
-print highlightEnd
+print "highlightStarts"
+print highlightStarts
+print "highlightEnds"
+print highlightEnds
 
 # last parameters are how many S and D lines we read in (to scale the y-axis)
 # Here we generate that :
@@ -198,14 +230,18 @@ fig = plt.gcf()
 fig.set_size_inches(basesNeedSpaceX, linesNeedSpaceY)
 
 axes = plt.gca()
-XfromHere=highlightStart*0.20-0.05
-XtoHere=highlightEnd*0.20
-XthisWide=XtoHere-XfromHere-0.07
-# axes.add_patch(patches.Rectangle((XfromHere, 0), XthisWide, linesNeedSpaceY,alpha=1, hatch='/',fill=False, facecolor="brown", edgecolor="brown"))
-axes.add_patch(patches.Rectangle((XfromHere, 0), XthisWide, linesNeedSpaceY,alpha=0.05, facecolor="brown", edgecolor="brown"))
+
+# Here to be added the for loop
+for highlightStart, highlightEnd in zip(highlightStarts, highlightEnds):
+    XfromHere=highlightStart*0.20-0.05
+    XtoHere=highlightEnd*0.20
+    XthisWide=XtoHere-XfromHere-0.07
+    # axes.add_patch(patches.Rectangle((XfromHere, 0), XthisWide, linesNeedSpaceY,alpha=1, hatch='/',fill=False, facecolor="brown", edgecolor="brown"))
+    axes.add_patch(patches.Rectangle((XfromHere, 0), XthisWide, linesNeedSpaceY,alpha=0.05, facecolor="brown", edgecolor="brown"))
 
 # Then the actual lines ..
 # ( we need to have axes defined before entering the below one - to be able to print "new index" whole line highlights)
+
 
 # 0.0 (origo) is BOTTOM left - so we need to start from top :
 currentYcoordinate=linesNeedSpaceY

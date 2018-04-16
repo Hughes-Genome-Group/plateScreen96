@@ -1,5 +1,24 @@
 #!/bin/bash
 
+##########################################################################
+# Copyright 2018, Jelena Telenius (jelena.telenius@ndcls.ox.ac.uk)       #
+#                                                                        #
+# This file is part of plateScreen96 .                                   #
+#                                                                        #
+# plateScreen96 is free software: you can redistribute it and/or modify  #
+# it under the terms of the GNU General Public License as published by   #
+# the Free Software Foundation, either version 3 of the License, or      #
+# (at your option) any later version.                                    #
+#                                                                        #
+# plateScreen96 is distributed in the hope that it will be useful,       #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of         #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
+# GNU General Public License for more details.                           #
+#                                                                        #
+# You should have received a copy of the GNU General Public License      #
+# along with plateScreen96.  If not, see <http://www.gnu.org/licenses/>. #
+##########################################################################
+
 minLenSet(){
     
     # Set them - along given parameters.
@@ -121,7 +140,7 @@ if [ $@ == "-h" ] || [ $@ == "--help" ]
 then
     
 PipeTopPath="$( which $0 | sed 's/\/plateScreen96.sh$//' )"
-BashHelpersPath="${PipeTopPath}/bashHelpers"
+BashHelpersPath="${PipeTopPath}/bin/bashHelpers"
 . ${BashHelpersPath}/usageAndVersion.sh
     
 usage
@@ -180,10 +199,12 @@ echo "Loading subroutines in .."
 
 PipeTopPath="$( which $0 | sed 's/\/plateScreen96.sh$//' )"
 
-BashHelpersPath="${PipeTopPath}/bashHelpers"
-PerlHelpersPath="${PipeTopPath}/perlHelpers"
-PythonHelpersPath="${PipeTopPath}/pythonHelpers"
-RHelpersPath="${PipeTopPath}/rHelpers"
+BashHelpersPath="${PipeTopPath}/bin/bashHelpers"
+PerlHelpersPath="${PipeTopPath}/bin/perlHelpers"
+PythonHelpersPath="${PipeTopPath}/bin/pythonHelpers"
+RHelpersPath="${PipeTopPath}/bin/rHelpers"
+
+configFilesPath="${PipeTopPath}/config"
 
 # READING THE PARAMETER FILES IN (in NGseqBasic style)
 . ${BashHelpersPath}/parameterFileReaders.sh
@@ -212,6 +233,27 @@ echo "BashHelpersPath ${BashHelpersPath}"
 echo "PerlHelpersPath ${PerlHelpersPath}"
 echo "PythonHelpersPath ${PythonHelpersPath}"
 echo "RHelpersPath ${RHelpersPath}"
+echo "configFilesPath ${configFilesPath}"
+echo
+
+#------------------------------------------
+
+# Calling in the CONFIGURATION script and its default setup :
+
+echo "Calling in the conf/*.sh scripts and their default setup .."
+
+supportedGenomes=()
+GenomeFastaList=()
+
+. ${confFolder}/loadNeededTools.sh
+. ${confFolder}/genomeBuildSetup.sh
+
+setGenomeLocations
+
+echo 
+echo "Supported genomes : "
+for g in $( seq 0 $((${#supportedGenomes[@]}-1)) ); do echo -n "${supportedGenomes[$g]} "; done
+echo 
 echo
 
 #------------------------------------------
@@ -412,6 +454,7 @@ echo "blatParams ${blatParams}"
 
 echo >> ${SUMMARYFILE}
 
+
 # ##########################################################################################
 # FIRST PART - PARAMETER FILE INTEGRITY TESTS (using pyramid-copied subroutines)
 # ##########################################################################################
@@ -465,6 +508,7 @@ whichFileName="FWD"
 
 indexParameterFileTester
 
+
 # The above generates INDEXfileFWD_LOAD.err - checking for the existence of it is enough to see if it went wrong !
 # Also - parameter value indexDataFWDOK=0 would tell the same.
 
@@ -516,23 +560,13 @@ fi
 
 #--------Setting-the-environment------------------------------------------------------------
 
-module purge
+# Loading the environment - either with module system or setting them into path.
+# This subroutine comes from conf/config.sh file
 
-perl --version | head -n 3
-python --version
-R --version | head -n 3
+printThis="LOADING RUNNING ENVIRONMENT"
+printToLogFile
 
-module load blat/35
-# Not known if would support other blat versions. Most probably will support.
-module load bedtools/2.17.0
-# Supports bedtools versions 2.1* . Does not support bedtools versions 2.2*
-module load flash/1.2.8
-# Not known if would support other flash versions. Most probably will support.
-module load fastqc/0.11.4
-# Will not support fastqc versions 0.10.* or older
-module load multiqc/0.7
-
-module list
+setPathsForPipe
 
 
 # convert --version

@@ -1,5 +1,24 @@
 #!/bin/bash
 
+##########################################################################
+# Copyright 2018, Jelena Telenius (jelena.telenius@ndcls.ox.ac.uk)       #
+#                                                                        #
+# This file is part of plateScreen96 .                                   #
+#                                                                        #
+# plateScreen96 is free software: you can redistribute it and/or modify  #
+# it under the terms of the GNU General Public License as published by   #
+# the Free Software Foundation, either version 3 of the License, or      #
+# (at your option) any later version.                                    #
+#                                                                        #
+# plateScreen96 is distributed in the hope that it will be useful,       #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of         #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
+# GNU General Public License for more details.                           #
+#                                                                        #
+# You should have received a copy of the GNU General Public License      #
+# along with plateScreen96.  If not, see <http://www.gnu.org/licenses/>. #
+##########################################################################
+
 # The subs below are copied from GEObuilder (as it was 20Feb2017) - and modified here.
 
 fastqParameterFileReader(){
@@ -290,69 +309,36 @@ rm -f forRead1.txt forRead2.txt forRead3.txt sameRead1.txt sameRead2.txt
 
 
 setGenomeFasta(){
-
-
-#-----------Genome-fastas-for-blat-and-bedtools-commands----------------------------------------------
-
-# [telenius@deva plate96test_270217]$ ls -1 /databank/igenomes/*/UCSC/*/Sequence/WholeGenomeFasta/genome.fa
-# 
-# /databank/igenomes/Caenorhabditis_elegans/UCSC/ce10/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Caenorhabditis_elegans/UCSC/ce6/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Danio_rerio/UCSC/danRer10/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Danio_rerio/UCSC/danRer7/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Drosophila_melanogaster/UCSC/dm3/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Drosophila_melanogaster/UCSC/dm6/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Gallus_gallus/UCSC/galGal4/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Homo_sapiens/UCSC/hg18/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Homo_sapiens/UCSC/hg38/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Mus_musculus/UCSC/mm10/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Mus_musculus/UCSC/mm9/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Pan_troglodytes/UCSC/panTro3/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Rattus_norvegicus/UCSC/rn4/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Rattus_norvegicus/UCSC/rn5/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Saccharomyces_cerevisiae/UCSC/sacCer3/Sequence/WholeGenomeFasta/genome.fa
-# /databank/igenomes/Sus_scrofa/UCSC/susScr3/Sequence/WholeGenomeFasta/genome.fa
-#
-# [telenius@deva plate96test_270217]$ 
-
-
-if [ "${GENOME}" = "mm9" ] ; then 
-    GenomeFasta="/databank/igenomes/Mus_musculus/UCSC/mm9/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "mm10" ] ; then 
-    GenomeFasta="/databank/igenomes/Mus_musculus/UCSC/mm10/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "hg18" ] ; then
-    GenomeFasta="/databank/igenomes/Homo_sapiens/UCSC/hg18/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "hg19" ] ; then 
-    GenomeFasta="/databank/igenomes/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "hg38" ] ; then 
-    GenomeFasta="/databank/igenomes/Homo_sapiens/UCSC/hg38/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "danRer7" ] ; then 
-    GenomeFasta="/databank/igenomes/Danio_rerio/UCSC/danRer7/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "danRer10" ] ; then 
-    GenomeFasta="/databank/igenomes/Danio_rerio/UCSC/danRer10/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "galGal4" ] ; then 
-    GenomeFasta="/databank/igenomes/Gallus_gallus/UCSC/galGal4/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "ce10" ] ; then 
-    GenomeFasta="/databank/igenomes/Caenorhabditis_elegans/UCSC/ce10/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "ce6" ] ; then 
-    GenomeFasta="/databank/igenomes/Caenorhabditis_elegans/UCSC/ce6/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "panTro3" ] ; then 
-    GenomeFasta="/databank/igenomes/Pan_troglodytes/UCSC/panTro3/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "rn4" ] ; then 
-    GenomeFasta="/databank/igenomes/Rattus_norvegicus/UCSC/rn4/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "rn5" ] ; then 
-    GenomeFasta="/databank/igenomes/Rattus_norvegicus/UCSC/rn5/Sequence/WholeGenomeFasta/genome.fa"
-elif [ "${GENOME}" = "susScr3" ] ; then 
-    GenomeFasta="/databank/igenomes/Sus_scrofa/UCSC/susScr3/Sequence/WholeGenomeFasta/genome.fa"
-else 
-  echo "Genome build " ${GENOME} " is not supported - aborting !"  >> "/dev/stderr"
-  exit 1 >> "/dev/stderr"
-fi
     
-echo "Set genome fasta : ${GenomeFasta}"
+GenomeFasta="UNDETERMINED"
+    
+for g in $( seq 0 $((${#GenomeFastaList[@]}-1)) ); do
+    
+# echo ${supportedGenomes[$g]}
+
+if [ "${GenomeFastaList[$g]}" == "${GENOME}" ]; then
+    GenomeFasta="${GenomeFastaList[$g]}"
+fi
+
+done 
+    
+if [ "${GenomeFasta}" == "UNDETERMINED" ]; then 
+  echo "Genome build " ${GENOME} " is not supported - aborting !"  >&2
+  exit 1 
+fi
+
+# Check that the file exists..
+if [ ! -e "${GenomeFasta}" ] || [ ! -r "${GenomeFasta}" ] || [ ! -s "${GenomeFasta}" ]; then
+  echo "Genome build ${GENOME} FASTA file ${GenomeFasta} not found or empty file - aborting !"  >&2
+  exit 1     
+fi
+
+echo
+echo "Genome ${GENOME} . Set genome FASTA file : ${GenomeFasta}"
+echo
 
 }
+
 
 fetchTargetLocus(){
 
