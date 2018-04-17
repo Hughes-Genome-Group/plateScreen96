@@ -26,8 +26,8 @@ fastqParameterFileReader(){
     # Tester for sample names - from inputFileChecks.sh in pyramid pipe
     
     rm -f TESTERfile.txt TESTERfileAll.txt
-    cat $file | grep -v "^#" | cut -f 1 | sed 's/[a-zA-Z0-9_]*//g' | grep -v "^$" > TESTERfile.txt
-    cat $file | grep -v "^#" | cut -f 1 | sed 's/[a-zA-Z0-9_]*//g' | grep -v "^$" | cat -A | sed 's/\$//' | tr "\n" " " | sed 's/\s\s*//' > TESTERfileAll.txt
+    cat ./PIPE_fastqPaths.txt | cut -f 1 | sed 's/[a-zA-Z0-9_]*//g' | grep -v "^$" > TESTERfile.txt
+    cat ./PIPE_fastqPaths.txt | cut -f 1 | sed 's/[a-zA-Z0-9_]*//g' | grep -v "^$" | cat -A | sed 's/\$//' | tr "\n" " " | sed 's/\s\s*//' > TESTERfileAll.txt
     
     if [ -s TESTERfileAll.txt ]
     then
