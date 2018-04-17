@@ -107,6 +107,9 @@ exitCode=$(( ${exitCode} + $? ))
 date   --version | head -n 1
 date   --version >> /dev/null
 exitCode=$(( ${exitCode} + $? ))
+join   --version | head -n 1
+join   --version >> /dev/null
+exitCode=$(( ${exitCode} + $? ))
 ln     --version | head -n 1
 ln     --version >> /dev/null
 exitCode=$(( ${exitCode} + $? ))
@@ -137,6 +140,9 @@ exitCode=$(( ${exitCode} + $? ))
 tr     --version | head -n 1
 tr     --version >> /dev/null
 exitCode=$(( ${exitCode} + $? ))
+uniq   --version | head -n 1
+uniq   --version >> /dev/null
+exitCode=$(( ${exitCode} + $? ))
 unlink --version | head -n 1
 unlink --version >> /dev/null
 exitCode=$(( ${exitCode} + $? ))
@@ -155,6 +161,25 @@ exitCode=$(( ${exitCode} + $? ))
 echo
 
 sleep 2
+
+echo "Calling 'gzip'  .."
+echo
+gzip --version | head -n 1
+gzip --version >> /dev/null
+exitCode=$(( ${exitCode} + $? ))
+echo
+
+sleep 2
+
+echo "Calling 'rev'  .."
+echo
+man rev | grep util-linux-ng
+echo "testReverseCommand" | rev >> /dev/null
+exitCode=$(( ${exitCode} + $? ))
+echo
+
+sleep 2
+
 
 diffLoadFailed=0
 echo "Calling 'diff' (optional - needed only in this tester script) .."

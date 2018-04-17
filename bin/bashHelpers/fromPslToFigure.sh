@@ -585,8 +585,11 @@ rm -f indiceKey.txt spacerPrimerRefLocus_forFigure.txt
 
 quickFix(){
     
-echo "/package/blat/35/bin/pslPretty -long blatted.psl ../targetLocus.fa ALLreads.fasta pretty.out"
-/package/blat/35/bin/pslPretty -long blatted.psl ../targetLocus.fa ALLreads.fasta pretty.out
+# echo "/package/blat/35/bin/pslPretty -long blatted.psl ../targetLocus.fa ALLreads.fasta pretty.out"
+# /package/blat/35/bin/pslPretty -long blatted.psl ../targetLocus.fa ALLreads.fasta pretty.out
+
+echo "pslPretty -long blatted.psl ../targetLocus.fa ALLreads.fasta pretty.out"
+pslPretty -long blatted.psl ../targetLocus.fa ALLreads.fasta pretty.out
 
 cat pretty.out | \
 awk '{if (substr($1,1,1) == ">" ) { if(NR>1) {print s[1]; print s[2] ; print s[3] } ; print $0 ; s[1]="";s[2]="";s[3]="";s[4]="";c=0} \
