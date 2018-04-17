@@ -20,7 +20,9 @@
 import sys
 import re
 import matplotlib
-print mpl.__version__
+print "matplotlib version:"
+print matplotlib.__version__
+
 # To allow using cluster "non-interactive plotting" - so not to complain when X-windows is not present.
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
