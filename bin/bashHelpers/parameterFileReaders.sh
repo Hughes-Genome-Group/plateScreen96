@@ -311,12 +311,13 @@ rm -f forRead1.txt forRead2.txt forRead3.txt sameRead1.txt sameRead2.txt
 setGenomeFasta(){
     
 GenomeFasta="UNDETERMINED"
-    
-for g in $( seq 0 $((${#GenomeFastaList[@]}-1)) ); do
+
+for g in $( seq 0 $((${#supportedGenomes[@]}-1)) ); do
     
 # echo ${supportedGenomes[$g]}
+# echo ${GenomeFastaList[$g]}
 
-if [ "${GenomeFastaList[$g]}" == "${GENOME}" ]; then
+if [ "${supportedGenomes[$g]}" == "${GENOME}" ]; then
     GenomeFasta="${GenomeFastaList[$g]}"
 fi
 

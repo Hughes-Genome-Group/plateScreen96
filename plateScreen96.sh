@@ -245,8 +245,8 @@ echo "Calling in the conf/*.sh scripts and their default setup .."
 supportedGenomes=()
 GenomeFastaList=()
 
-. ${confFolder}/loadNeededTools.sh
-. ${confFolder}/genomeBuildSetup.sh
+. ${configFilesPath}/loadNeededTools.sh
+. ${configFilesPath}/genomeBuildSetup.sh
 
 setGenomeLocations
 

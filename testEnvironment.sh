@@ -197,7 +197,7 @@ exitCode=$(( ${exitCode} + $? ))
 
 # From where to call the CONFIGURATION script..
 
-confFolder="${PipeTopPath}/config"
+configFilesPath="${PipeTopPath}/config"
 
 BashHelpersPath="${PipeTopPath}/bin/bashHelpers"
 PerlHelpersPath="${PipeTopPath}/bin/perlHelpers"
@@ -208,7 +208,7 @@ echo
 echo "This is where they should be ( will soon see if they actually are there ) :"
 echo
 echo "PipeTopPath        ${PipeTopPath}"
-echo "confFolder         ${confFolder}"
+echo "configFilesPath         ${configFilesPath}"
 echo "BashHelpersPath    ${BashHelpersPath}"
 echo "PerlHelpersPath    ${PerlHelpersPath}"
 echo "PythonHelpersPath  ${PythonHelpersPath}"
@@ -283,9 +283,9 @@ echo
 sleep 3
 echo "Configuration setters :"
 echo
-ls ${confFolder}/genomeBuildSetup.sh
+ls ${configFilesPath}/genomeBuildSetup.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${confFolder}/loadNeededTools.sh
+ls ${configFilesPath}/loadNeededTools.sh
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 echo
 sleep 3
@@ -361,7 +361,7 @@ sleep 6
 
 setupMade=1
 
-TEMPcount=$(($( diff ${PipeTopPath}/bin/bashHelpers/validateSetup/g.txt ${confFolder}/genomeBuildSetup.sh | grep -c "" )))
+TEMPcount=$(($( diff ${PipeTopPath}/bin/bashHelpers/validateSetup/g.txt ${configFilesPath}/genomeBuildSetup.sh | grep -c "" )))
 
 if [ "${TEMPcount}" -eq 0 ]
 then
@@ -369,12 +369,12 @@ setupMade=0
 echo
 echo "WARNING ! It seems you haven't set up your Bowtie Genome indices !"
 echo "          Add your Bowtie indices to this file : "
-echo "          ${confFolder}/genomeBuildSetup.sh "
+echo "          ${configFilesPath}/genomeBuildSetup.sh "
 echo
 sleep 6
 fi
 
-TEMPcount=$(($( diff ${PipeTopPath}/bin/bashHelpers/validateSetup/l.txt ${confFolder}/loadNeededTools.sh | grep -c "" )))
+TEMPcount=$(($( diff ${PipeTopPath}/bin/bashHelpers/validateSetup/l.txt ${configFilesPath}/loadNeededTools.sh | grep -c "" )))
 
 if [ "${TEMPcount}" -eq 0 ]
 then
@@ -382,7 +382,7 @@ setupMade=0
 echo
 echo "WARNING ! It seems you haven't set up the loading of your Needed Toolkits !"
 echo "          Add your toolkit paths to this file : "
-echo "          ${confFolder}/loadNeededTools.sh "
+echo "          ${configFilesPath}/loadNeededTools.sh "
 echo
 echo "NOTE !!   You need to edit this file ALSO if you want to disable loading the toolkits via the above script."
 echo "          To disable the loading of the tools, set : setToolLocations=0 "
@@ -390,18 +390,6 @@ echo
 sleep 8
 fi
 
-TEMPcount=$(($( diff ${PipeTopPath}/bin/bashHelpers/validateSetup/s.txt ${confFolder}/serverAddressAndPublicDiskSetup.sh | grep -c "" )))
-
-if [ "${TEMPcount}" -eq 0 ]
-then
-setupMade=0
-echo
-echo "WARNING ! It seems you haven't set up your Server address and Public Disk Area !"
-echo "          Add your Server address to this file : "
-echo "          ${confFolder}/serverAddressAndPublicDiskSetup.sh "
-echo
-sleep 4
-fi
 
 # Only continue to the rest of the script, if there is some changes in the above listings ..
 
@@ -431,8 +419,8 @@ supportedGenomes=()
 GenomeFastaList=()
 
 # These have been checked earlier. Should exist now.
-. ${confFolder}/loadNeededTools.sh
-. ${confFolder}/genomeBuildSetup.sh
+. ${configFilesPath}/loadNeededTools.sh
+. ${configFilesPath}/genomeBuildSetup.sh
 
 setGenomeLocations 1>/dev/null
 setPathsForPipe 1>/dev/null
