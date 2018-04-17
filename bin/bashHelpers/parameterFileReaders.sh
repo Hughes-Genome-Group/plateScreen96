@@ -23,6 +23,38 @@
 
 fastqParameterFileReader(){
     
+    # Tester for sample names - from inputFileChecks.sh in pyramid pipe
+    
+    rm -f TESTERfile.txt TESTERfileAll.txt
+    cat $file | grep -v "^#" | cut -f 1 | sed 's/[a-zA-Z0-9_]*//g' | grep -v "^$" > TESTERfile.txt
+    cat $file | grep -v "^#" | cut -f 1 | sed 's/[a-zA-Z0-9_]*//g' | grep -v "^$" | cat -A | sed 's/\$//' | tr "\n" " " | sed 's/\s\s*//' > TESTERfileAll.txt
+    
+    if [ -s TESTERfileAll.txt ]
+    then
+        echo >> FOLDERNAMES.err ;
+        echo "Forbidden characters (other than a-z A-Z 0-9 _ ) in sample names in file ${file} :" >> FOLDERNAMES.err ;
+        cat TESTERfile.txt >> FOLDERNAMES.err ;
+        echo "Same printout with also WHITESPACE characters (check your line endings etc) :" >> FOLDERNAMES.err ;
+        echo "  ^I = tab , $ = line ending ( if you have anything else weird - get rid of it ) :" >> FOLDERNAMES.err ;
+        cat -A TESTERfile.txt >> FOLDERNAMES.err ;
+        
+        rm -f TESTERfile.txt TESTERfileAll.txt
+        
+        cat FOLDERNAMES.err
+        cat FOLDERNAMES.err >> "/dev/stderr"
+        
+        printThis="EXITING !"
+        printToLogFile
+        
+        exit 1
+        
+    fi
+    
+    rm -f TESTERfile.txt TESTERfileAll.txt
+    
+    
+    # Now we can proceed ..
+    
     nameList=($( cut -f 1 ./PIPE_fastqPaths.txt ))
     
     # Check how many columns we have.

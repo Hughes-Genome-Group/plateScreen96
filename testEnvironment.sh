@@ -208,7 +208,7 @@ echo
 echo "This is where they should be ( will soon see if they actually are there ) :"
 echo
 echo "PipeTopPath        ${PipeTopPath}"
-echo "configFilesPath         ${configFilesPath}"
+echo "configFilesPath    ${configFilesPath}"
 echo "BashHelpersPath    ${BashHelpersPath}"
 echo "PerlHelpersPath    ${PerlHelpersPath}"
 echo "PythonHelpersPath  ${PythonHelpersPath}"
@@ -291,9 +291,9 @@ echo
 sleep 3
 echo "Configuration tester helpers :"
 echo
-ls ${helperScriptFolder}/validateSetup/g.txt
+ls ${BashHelpersPath}/validateSetup/g.txt
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
-ls ${helperScriptFolder}/validateSetup/l.txt
+ls ${BashHelpersPath}/validateSetup/l.txt
 scriptFilesMissing=$(( ${scriptFilesMissing} + $? ))
 echo
 sleep 3
@@ -361,20 +361,20 @@ sleep 6
 
 setupMade=1
 
-TEMPcount=$(($( diff ${PipeTopPath}/bin/bashHelpers/validateSetup/g.txt ${configFilesPath}/genomeBuildSetup.sh | grep -c "" )))
+TEMPcount=$(($( diff ${BashHelpersPath}/validateSetup/g.txt ${configFilesPath}/genomeBuildSetup.sh | grep -c "" )))
 
 if [ "${TEMPcount}" -eq 0 ]
 then
 setupMade=0
 echo
-echo "WARNING ! It seems you haven't set up your Bowtie Genome indices !"
-echo "          Add your Bowtie indices to this file : "
+echo "WARNING ! It seems you haven't set up your Genome Fasta files !"
+echo "          Add your Genome Fastas to this file : "
 echo "          ${configFilesPath}/genomeBuildSetup.sh "
 echo
 sleep 6
 fi
 
-TEMPcount=$(($( diff ${PipeTopPath}/bin/bashHelpers/validateSetup/l.txt ${configFilesPath}/loadNeededTools.sh | grep -c "" )))
+TEMPcount=$(($( diff ${BashHelpersPath}/validateSetup/l.txt ${configFilesPath}/loadNeededTools.sh | grep -c "" )))
 
 if [ "${TEMPcount}" -eq 0 ]
 then
@@ -400,7 +400,7 @@ echo
 echo "Could not finish testing, as you hadn't set up your environment !"
 echo
 echo "Set up your files according to instructions in :"
-echo "http://sara.molbiol.ox.ac.uk/public/telenius/NGseqBasicManual/outHouseUsers/instructions.html"
+echo "http://sara.molbiol.ox.ac.uk/public/telenius/plate96/instructionsGeneral.html"
 echo
 sleep 4
 
@@ -422,8 +422,8 @@ GenomeFastaList=()
 . ${configFilesPath}/loadNeededTools.sh
 . ${configFilesPath}/genomeBuildSetup.sh
 
-setGenomeLocations 1>/dev/null
-setPathsForPipe 1>/dev/null
+setGenomeLocations >/dev/null 2>&1
+setPathsForPipe >/dev/null 2>&1
 
 echo
 sleep 4
