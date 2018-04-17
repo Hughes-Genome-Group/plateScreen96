@@ -548,6 +548,13 @@ echo
 
 sleep 4
 
+echo "Matplotlib - within python .."
+echo
+python -c "import matplotlib as mpl; print mpl.__version__" 
+exitCode=$(( ${exitCode} + $? ))
+echo
+
+sleep 4
 
 
 # Return the value : 0 if only warnings, 1 if fatal problems.
