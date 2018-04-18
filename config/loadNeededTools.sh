@@ -85,7 +85,7 @@ module load R/3.2.1
 module list 2>&1
 
 perl --version | head -n 3
-python --version
+python --version 2>&1
 R --version | head -n 3
 
 # #############################################################################
@@ -114,7 +114,7 @@ export PATH=$PATH:/package/R/3.2.1/bin
 
 echo $PATH
 perl --version | head -n 3
-python --version
+python --version 2>&1
 R --version | head -n 3
 
 # #############################################################################

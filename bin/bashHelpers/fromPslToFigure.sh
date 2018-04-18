@@ -87,12 +87,14 @@ if [ $(($( cat unblattedForInspection.txt | grep -c "" ))) -gt ${maxLinesPerFile
     printToLogFile
     printThis="${PythonHelpersPath}/figurer.py unblattedfirst${maxLinesPerFile}ForFigure.txt unblattedInspection ${basesForFigure}"
     printToLogFile
+    python --version 2>&1
     python ${PythonHelpersPath}/figurer.py unblattedfirst${maxLinesPerFile}ForFigure.txt unblattedInspection ${basesForFigure}
 
 else
 
     printThis="${PythonHelpersPath}/figurer.py unblattedForInspection.txt unblattedInspection ${basesForFigure}"
     printToLogFile
+    python --version 2>&1
     python ${PythonHelpersPath}/figurer.py unblattedForInspection.txt unblattedInspection ${basesForFigure}
 
 fi

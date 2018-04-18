@@ -434,10 +434,12 @@ if [ "${printingInBatches}" -eq 0 ]; then
 
   printThis="${PythonHelpersPath}/${figurescript} forFigure.txt ${nameList[$i]}_blattedFigure ${figureparams}"
   printToLogFile
+  python --version 2>&1
   python ${PythonHelpersPath}/${figurescript} forFigure.txt ${nameList[$i]}_blattedFigure ${figureparams}
   
   printThis="${PythonHelpersPath}/${figurescript} forFigure_withOrigSeq.txt ${nameList[$i]}_blattedFigure_withOrigSeq ${figureparams}"
   printToLogFile
+  python --version 2>&1
   python ${PythonHelpersPath}/${figurescript} forFigure_withOrigSeq.txt ${nameList[$i]}_blattedFigure_withOrigSeq ${figureparams}
 
 else
@@ -452,6 +454,7 @@ else
     orderNo=$( echo ${file} | sed 's/^forFigure//' | sed 's/.txt$//' )
     printThis="${PythonHelpersPath}/${figurescript} ${file} ${nameList[$i]}_blattedFigure${orderNo} ${figureparams}"
     printToLogFile
+    python --version 2>&1
     python ${PythonHelpersPath}/${figurescript} ${file} ${nameList[$i]}_blattedFigure${orderNo} ${figureparams}
     done
   fi
@@ -475,6 +478,7 @@ if [ "${printingInBatches}" -eq 0 ]; then
 
   printThis="${PythonHelpersPath}/figurer.py forFigure_alsoReferenceAligned.txt ${nameList[$i]}_blattedFigure_alsoReferenceAligned ${basesForFigure}"
   printToLogFile
+  python --version 2>&1
   python ${PythonHelpersPath}/figurer.py forFigure_alsoReferenceAligned.txt ${nameList[$i]}_blattedFigure_alsoReferenceAligned ${basesForFigure}
 
 else
@@ -484,6 +488,7 @@ else
   orderNo=$( echo ${file} | sed 's/^forFigure//' | sed 's/.txt$//' )
   printThis="${PythonHelpersPath}/figurer.py ${file} ${nameList[$i]}_blattedFigure${orderNo} ${basesForFigure}"
   printToLogFile
+  python --version 2>&1
   python ${PythonHelpersPath}/figurer.py ${file} ${nameList[$i]}_blattedFigure${orderNo} ${basesForFigure}
   done
     
