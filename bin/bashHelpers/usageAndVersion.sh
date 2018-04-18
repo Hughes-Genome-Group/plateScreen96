@@ -52,7 +52,7 @@ echo "--lanes 1 (set this to be the number of lanes, if there are more than 1 la
 echo ""
 echo "LIBRARY : FRAGMENT LENGHT SETTINGS"
 # --flashX (hidden flag) 0 (how many mismatches allowed in flash step - by default zero, and actually no reason to change this.)
-echo "--sonicationSize 300 (Max expected size of a flash-combined fragment). Check the correctness of the parameter you gave here, after the run, from the fastQC report of the flashed reads."
+echo "--ampliconSize 300 (Max expected size of a flash-combined fragment). Check the correctness of the parameter you gave here, after the run, from the fastQC report of the flashed reads."
 echo
 echo "--flashOverlap 40    (Only affects the visualisation - How much the reads need to overlap, before they are combined to R1-R2 flashed read. Default super stringent 40 bases. "
 echo "                      The rest of the reads continue as non-flashed reads - i.e. this only affects the visualisation part of the analysis. )"

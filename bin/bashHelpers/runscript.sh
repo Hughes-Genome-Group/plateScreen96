@@ -71,8 +71,8 @@ intQuals=33
     
     echo "Flash will be ran in quality score scheme : ${intQuals}"
     
-echo "flash -x ${flashX} -M $((${SONICATIONSIZE}+50)) -m ${FLASHOVERLAP} -p ${intQuals} READ1.fastq READ2.fastq"
-flash -x ${flashX} -M $((${SONICATIONSIZE}+50)) -m ${FLASHOVERLAP} -p ${intQuals} READ1.fastq READ2.fastq > flashing.log
+echo "flash -x ${flashX} -M $((${AMPLICONSIZE}+50)) -m ${FLASHOVERLAP} -p ${intQuals} READ1.fastq READ2.fastq"
+flash -x ${flashX} -M $((${AMPLICONSIZE}+50)) -m ${FLASHOVERLAP} -p ${intQuals} READ1.fastq READ2.fastq > flashing.log
 
 cat flashing.log
 

@@ -116,7 +116,7 @@ SINGLE_END=0
 GENOME="UNDEFINED"
 
 flashX=0
-SONICATIONSIZE=300
+AMPLICONSIZE=300
 FLASHOVERLAP=40
 MINPCRCOUNT=100
 MAXPERWELL=20
@@ -271,7 +271,7 @@ minMatch=1
 #------------------------------------------
 
 
-OPTS=`getopt -o h,g: --long help,lanes:,singleEnd,gz,flashX:,sonicationSize:,flashOverlap:,minPCRcount:,minLen:,minLen8:,minLen12:,maxPerWell:,stepSize:,tileSize:,minScore:,minIdentity:,minMatch: -- "$@"`
+OPTS=`getopt -o h,g: --long help,lanes:,singleEnd,gz,flashX:,ampliconSize:,flashOverlap:,minPCRcount:,minLen:,minLen8:,minLen12:,maxPerWell:,stepSize:,tileSize:,minScore:,minIdentity:,minMatch: -- "$@"`
 if [ $? != 0 ]
 then
     usage ;
@@ -288,7 +288,7 @@ while true ; do
         --singleEnd) SINGLE_END=1 ; shift;;
         --gz) GZIP=1 ; shift;;
         --flashX) flashX=$2 ; shift 2;;
-        --sonicationSize) SONICATIONSIZE=$2 ; shift 2;;
+        --ampliconSize) AMPLICONSIZE=$2 ; shift 2;;
         --flashOverlap) FLASHOVERLAP=$2 ; shift 2;;
         --minPCRcount) MINPCRCOUNT=$2 ; shift 2;;
         --minLen) minLen=$2 ; shift 2;;
@@ -419,7 +419,7 @@ echo "GZIP ${GZIP}"
 # echo "SINGLE_END ${SINGLE_END}"
 echo
 echo "flashX ${flashX} "
-echo "SONICATIONSIZE ${SONICATIONSIZE}"
+echo "AMPLICONSIZE ${AMPLICONSIZE}"
 echo "FLASHOVERLAP ${FLASHOVERLAP}"
 echo "MINPCRCOUNT ${MINPCRCOUNT}"
 echo "MINLENfwd ${MINLEN8}"
@@ -443,7 +443,7 @@ echo "GZIP ${GZIP}" >> ${SUMMARYFILE}
 # echo "SINGLE_END ${SINGLE_END}" >> ${SUMMARYFILE}
 echo >> ${SUMMARYFILE}
 echo "flashX ${flashX} " >> ${SUMMARYFILE}
-echo "SONICATIONSIZE ${SONICATIONSIZE}" >> ${SUMMARYFILE}
+echo "AMPLICONSIZE ${AMPLICONSIZE}" >> ${SUMMARYFILE}
 echo "FLASHOVERLAP ${FLASHOVERLAP}" >> ${SUMMARYFILE}
 echo "MINPCRCOUNT ${MINPCRCOUNT}" >> ${SUMMARYFILE}
 echo "MINLENfwd ${MINLEN8}" >> ${SUMMARYFILE}
