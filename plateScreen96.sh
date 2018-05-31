@@ -445,6 +445,15 @@ echo >> ${SUMMARYFILE}
 echo "flashX ${flashX} " >> ${SUMMARYFILE}
 echo "AMPLICONSIZE ${AMPLICONSIZE}" >> ${SUMMARYFILE}
 echo "FLASHOVERLAP ${FLASHOVERLAP}" >> ${SUMMARYFILE}
+
+echo >> ${SUMMARYFILE}
+echo "This means your R1 and R2 reads need to overlap MIN ${FLASHOVERLAP} bases " >> ${SUMMARYFILE}
+echo "to be COMBINED to a single extended read during the run." >> ${SUMMARYFILE}
+echo >> ${SUMMARYFILE}
+echo "The stringent default is there to AVOID REPORTING FALSE POSITIVE DELETIONS">> ${SUMMARYFILE}
+echo "in repeat-rich amplicon regions.">> ${SUMMARYFILE}
+echo >> ${SUMMARYFILE}
+
 echo "MINPCRCOUNT ${MINPCRCOUNT}" >> ${SUMMARYFILE}
 echo "MINLENfwd ${MINLEN8}" >> ${SUMMARYFILE}
 echo "MINLENrev ${MINLEN12}" >> ${SUMMARYFILE}
