@@ -54,6 +54,7 @@ supportedGenomes[10]="panTro3"
 supportedGenomes[11]="rn4"
 supportedGenomes[12]="rn5"
 supportedGenomes[13]="susScr3"
+supportedGenomes[14]="SSCRrevcomp"
 
 # #############################################################################
 # GENOME FASTA FILE PATHS
@@ -75,6 +76,7 @@ supportedGenomes[13]="susScr3"
     GenomeFastaList[11]="/databank/igenomes/Rattus_norvegicus/UCSC/rn4/Sequence/WholeGenomeFasta/genome.fa"
     GenomeFastaList[12]="/databank/igenomes/Rattus_norvegicus/UCSC/rn5/Sequence/WholeGenomeFasta/genome.fa"
     GenomeFastaList[13]="/databank/igenomes/Sus_scrofa/UCSC/susScr3/Sequence/WholeGenomeFasta/genome.fa"
+    GenomeFastaList[14]="/t1-data/user/mbadat/Parameters/SSCRrevcomp.fa"
 
 }
 
